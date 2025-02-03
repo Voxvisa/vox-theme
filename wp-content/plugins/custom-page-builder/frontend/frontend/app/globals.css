@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 100, 255, 0.6);
+  border-radius: 4px;
+}
+
+/* Animations */
+@layer components {
+  .fade-in {
+    @apply transition-opacity duration-300 opacity-0;
+  }
+  .fade-in.visible {
+    @apply opacity-100;
+  }
+}
