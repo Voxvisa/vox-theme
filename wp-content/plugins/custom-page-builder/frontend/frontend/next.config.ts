@@ -1,21 +1,16 @@
-import { NextConfig } from "next";
-import withPWA from "next-pwa";
-
-const nextConfig: NextConfig = withPWA({
-  reactStrictMode: true,
-  swcMinify: true,
-  experimental: {
-    appDir: true,
-  },
-  images: {
-    domains: ["yourdomain.com", "cdn.yourdomain.com"],
-  },
-  pwa: {
-    dest: "public",
-    register: true,
-    skipWaiting: true,
-    disable: process.env.NODE_ENV === "development",
-  },
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  disable: process.env.NODE_ENV === 'development',
+  register: true,
+  skipWaiting: true,
 });
 
-export default nextConfig;
+const nextConfig = {
+  reactStrictMode: true,
+  experimental: {}, // Fix voor "appDir" foutmelding
+  images: {
+    domains: ['yourdomain.com'], // Voeg hier je domein toe als je externe afbeeldingen gebruikt
+  },
+};
+
+module.exports = withPWA(nextConfig);
