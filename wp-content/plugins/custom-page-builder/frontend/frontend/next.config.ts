@@ -1,34 +1,16 @@
-import { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
 import withPWA from "next-pwa";
 
-const nextConfig: NextConfig = withPWA({
+const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {
-    appDir: true,
-    scrollRestoration: true,
-  },
-  images: {
-    domains: ["res.cloudinary.com", "source.unsplash.com"],
-  },
+  experimental: { appDir: true },
   pwa: {
     dest: "public",
     disable: process.env.NODE_ENV === "development",
+    register: true,
+    skipWaiting: true,
   },
-  i18n: {
-    locales: ["en", "nl", "fr", "de"],
-    defaultLocale: "en",
-  },
-  headers: async () => [
-    {
-      source: "/(.*)",
-      headers: [
-        { key: "X-Frame-Options", value: "DENY" },
-        { key: "X-Content-Type-Options", value: "nosniff" },
-        { key: "X-XSS-Protection", value: "1; mode=block" },
-      ],
-    },
-  ],
-});
+};
 
-export default nextConfig;
+export default withPWA(nextConfig);
