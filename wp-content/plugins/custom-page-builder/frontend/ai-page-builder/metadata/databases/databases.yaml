@@ -1,0 +1,29 @@
+version: 3
+databases:
+  default:
+    connection_info:
+      database_url: "${HASURA_DATABASE_URL}"
+      pool_settings:
+        max_connections: 50
+    tables:
+      - name: payments
+        columns:
+          - name: id
+            type: uuid
+            primary_key: true
+            default: gen_random_uuid()
+          - name: user_id
+            type: uuid
+          - name: amount
+            type: float
+          - name: currency
+            type: text
+          - name: payment_method
+            type: text
+          - name: status
+            type: text
+          - name: transaction_hash
+            type: text
+          - name: date
+            type: timestamp
+            default: now()

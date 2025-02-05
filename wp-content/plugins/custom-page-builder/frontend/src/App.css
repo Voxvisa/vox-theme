@@ -1,0 +1,73 @@
+/* Variabelen voor betere schaalbaarheid */
+:root {
+  --primary-color: #646cff;
+  --hover-color: #646cffaa;
+  --react-color: #61dafb;
+}
+
+/* Algemene layout */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  transition: filter 300ms ease-in-out;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em var(--hover-color));
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em var(--react-color));
+}
+
+/* Optimalere animaties */
+@media (prefers-reduced-motion: no-preference) {
+  .logo:nth-of-type(2) {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.card {
+  padding: 2em;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+button {
+  background: var(--primary-color);
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+button:hover {
+  background: var(--hover-color);
+}
+
+.read-the-docs {
+  color: #888;
+  font-size: 0.9rem;
+  margin-top: 20px;
+}

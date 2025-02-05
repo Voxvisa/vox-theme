@@ -1,0 +1,6 @@
+version: 3
+endpoint: https://ai-page-builder.hasura.app/v1/graphql
+admin_secret: GW1QU0ro6eZpigtjGQTwyQ4V2ZBg1OshfiomwM2v2VYcfA2ULyG7dVsdbJ50RQ0D
+metadata_directory: metadata
+migrations_directory: migrations
+seeds_directory: seeds
