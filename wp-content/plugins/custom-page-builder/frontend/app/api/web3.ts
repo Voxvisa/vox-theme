@@ -1,33 +1,52 @@
-import { ethers } from "ethers";
+import { ethers, Contract, Signer, BrowserProvider } from "ethers";
 
-const contractAddress = "0xYourContractAddressHere";
-const contractABI = [
+const contractAddress: string = "0xYourContractAddressHere";
+const contractABI: string[] = [
   "function purchaseSubscription(string tier) public payable",
   "function getSubscriptionPrice(string tier) public view returns (uint256)",
   "function isSubscriptionActive(uint256 tokenId) public view returns (bool)"
 ];
 
-export async function connectWallet() {
-  if (!window.ethereum) {
-    alert("Installeer MetaMask om door te gaan!");
-    return;
+// ✅ Zorgt ervoor dat MetaMask beschikbaar is zonder Next.js SSR errors
+const getEthereumObject = (): any => {
+  if (typeof window !== "undefined" && window.ethereum) {
+    return window.ethereum;
+  } else {
+    console.error("❌ MetaMask niet gevonden.");
+    return null;
   }
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-  return provider.getSigner();
+};
+
+// ✅ Connect wallet met MetaMask
+export async function connectWallet(): Promise<Signer | null> {
+  const ethereum = getEthereumObject();
+  if (!ethereum) return null;
+
+  try {
+    const provider = new BrowserProvider(ethereum);
+    await provider.send("eth_requestAccounts", []);
+    return provider.getSigner();
+  } catch (error) {
+    console.error("⚠️ Wallet connectie mislukt:", error);
+    return null;
+  }
 }
 
-export async function purchaseSubscription(tier: string) {
+// ✅ Abonnement kopen met MetaMask
+export async function purchaseSubscription(tier: string): Promise<string> {
   const signer = await connectWallet();
-  const contract = new ethers.Contract(contractAddress, contractABI, signer);
-  const price = await contract.getSubscriptionPrice(tier);
-  
+  if (!signer) return "❌ Wallet is niet verbonden.";
+
   try {
+    const contract = new Contract(contractAddress, contractABI, signer);
+    const price: ethers.BigNumberish = await contract.getSubscriptionPrice(tier);
+    
     const tx = await contract.purchaseSubscription(tier, { value: price });
     await tx.wait();
+
     return "✅ Abonnement succesvol geactiveerd!";
-  } catch (error) {
+  } catch (error: any) {
     console.error("⚠️ Transactie mislukt:", error);
-    return "❌ Fout bij betaling, probeer opnieuw.";
+    return error.message || "❌ Betaling mislukt, probeer opnieuw.";
   }
 }

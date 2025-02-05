@@ -1,22 +1,37 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ESNext",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
     "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
+    "strict": true,
     "noEmit": true,
     "incremental": true,
     "module": "esnext",
-    "esModuleInterop": true,
     "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@/app/*": [
+        "./app/*"
+      ],
+      "@/api/*": [
+        "./app/api/*"
+      ],
+      "@/components/*": [
+        "./app/components/*"
+      ]
+    },
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
     "plugins": [
       {
         "name": "next"

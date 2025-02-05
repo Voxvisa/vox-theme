@@ -1,30 +1,38 @@
-import { useEffect, useState } from "react";
-import { connectWallet, purchaseSubscription } from "../api/web3";
+"use client";
+
+import { useState } from "react";
+import { purchaseSubscription } from "@/app/api/web3"; // ✅ Zorg dat web3.ts hier goed geïmporteerd is!
 
 export default function Web3Subscription() {
-  const [status, setStatus] = useState("⏳ Laden...");
-  const [wallet, setWallet] = useState("");
+  const [status, setStatus] = useState<string>("");
 
-  useEffect(() => {
-    async function checkConnection() {
-      try {
-        const signer = await connectWallet();
-        setWallet(await signer.getAddress());
-        setStatus("✅ Wallet verbonden");
-      } catch {
-        setStatus("⚠️ Niet verbonden");
-      }
-    }
-    checkConnection();
-  }, []);
+  const handleSubscription = async (tier: string) => {
+    setStatus("⏳ Bezig met transactie...");
+    const result = await purchaseSubscription(tier);
+    setStatus(result);
+  };
 
   return (
     <div className="p-8">
       <h2 className="text-2xl font-bold">🔗 Web3 Abonnement</h2>
-      <p className="mt-2">{status}</p>
-      <button onClick={() => purchaseSubscription("Pro")} className="mt-4 p-3 bg-blue-600 text-white">
-        🏆 Pro Abonnement Kopen (0.1 ETH)
-      </button>
+      <p className="text-gray-600">Kies een abonnement en betaal via MetaMask.</p>
+
+      <div className="mt-4 flex space-x-4">
+        <button
+          onClick={() => handleSubscription("basic")}
+          className="bg-blue-500 text-white px-4 py-2 rounded"
+        >
+          Koop Basic (€10)
+        </button>
+        <button
+          onClick={() => handleSubscription("premium")}
+          className="bg-green-500 text-white px-4 py-2 rounded"
+        >
+          Koop Premium (€30)
+        </button>
+      </div>
+
+      {status && <p className="mt-4 text-gray-700">{status}</p>}
     </div>
   );
 }

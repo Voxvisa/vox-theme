@@ -15,7 +15,7 @@ function App() {
     <>
       <header className="header">
         <Logo href="https://vitejs.dev" src={viteLogo} alt="Vite Logo" />
-        <<Logo href="https://react.dev" src={reactLogo} alt="React Logo" />        />
+        <Logo href="https://react.dev" src={reactLogo} alt="React Logo" />
       </header>
 
       <main>
