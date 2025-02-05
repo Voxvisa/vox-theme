@@ -1,0 +1,10 @@
+{
+    "rootDirectory": "wp-content/plugins/custom-page-builder/frontend",
+    "builds": [
+      {
+        "src": "wp-content/plugins/custom-page-builder/frontend/package.json",
+        "use": "@vercel/next"
+      }
+    ]
+  }
+  
