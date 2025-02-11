@@ -1,0 +1,3 @@
+[submodule "wp-content/plugins/custom-page-builder/frontend/lib/forge-std"]
+	path = wp-content/plugins/custom-page-builder/frontend/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
